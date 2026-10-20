@@ -82,19 +82,16 @@ footer{border-top:2px solid var(--line);padding:24px 0 40px;color:var(--mu);font
 .sr{position:absolute;left:-9999px}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 @media(max-width:560px){.bar{flex-wrap:wrap}nav{margin-left:0;width:100%}.search{flex-direction:column}}
+#langbtn{flex:none;min-height:38px}
+@media(max-width:560px){.logo{order:1}#langbtn{order:2;margin-left:auto}nav{order:3}}
 </style>
 </head>
 <body>
 <header class="top"><div class="wrap bar">
 <a class="logo" href="#/"><span class="px" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>Packwisp</a>
-<nav id="nav" aria-label="Hauptnavigation">
-<a href="#/" data-r="home">Start</a><a href="#/diagnose" data-r="diagnose">Diagnose</a><a href="#/addons" data-r="addons">Add-ons</a><a href="#/anleitungen" data-r="anleitungen">Anleitungen</a><a href="#/favoriten" data-r="favoriten">★ Favoriten</a>
-</nav></div></header>
+<nav id="nav" aria-label="Hauptnavigation"></nav><button class="chip" id="langbtn" type="button">EN</button></div></header>
 <main><div class="wrap" id="app" aria-live="polite"></div></main>
-<footer><div class="wrap">
-<p><b>Packwisp</b> ist ein inoffizielles Fan-Projekt und nicht mit Mojang, Microsoft oder Minecraft verbunden. „Minecraft“ ist eine Marke von Mojang Synergies AB. Diese Seite nutzt keine offiziellen Logos oder Grafiken.</p>
-<p>Alle Angaben ohne Kennzeichnung „geprüft“ sind unverifiziert. Die Seite speichert nur deine Favoriten lokal in deinem Browser und sendet keine Daten an Server.</p>
-</div></footer>
+<footer><div class="wrap" id="foot"></div></footer>
 
 <script>
 "use strict";
@@ -103,7 +100,7 @@ const CATS=["Fahrzeuge","Militär","Tiere","Technik","Horror","Abenteuer","Dekor
 const DEVICES={ios:"iPad/iPhone",android:"Android",windows:"Windows"};
 
 // DEMO-Daten: erfunden, nur zur Veranschaulichung. Keine echten Links, Bewertungen oder Tests.
-const ADDONS=[
+const ADDONS_DE=[
  {id:"d1",name:"Demo: Stadtfahrzeuge",cat:"Fahrzeuge",desc:"Platzhalter-Eintrag für einen Add-on mit Autos und Bussen.",dev:[],ver:null,ok:false,src:null},
  {id:"d2",name:"Demo: Feldlager-Pack",cat:"Militär",desc:"Platzhalter-Eintrag für Zelte und Ausrüstung im Feldlager-Stil.",dev:[],ver:null,ok:false,src:null},
  {id:"d3",name:"Demo: Waldtiere",cat:"Tiere",desc:"Platzhalter-Eintrag für zusätzliche Tiere in Wäldern.",dev:[],ver:null,ok:false,src:null},
@@ -114,7 +111,7 @@ const ADDONS=[
  {id:"d8",name:"Demo: Überlebenskünstler",cat:"Survival",desc:"Platzhalter-Eintrag für Durst, Hunger-Erweiterungen und Crafting.",dev:[],ver:null,ok:false,src:null}
 ];
 
-const GUIDES=[
+const GUIDES_DE=[
 {slug:"addons-auf-dem-ipad-installieren",date:"2026-10-20",title:"Add-ons auf dem iPad installieren",q:"Wie installiere ich Minecraft-Bedrock-Add-ons auf dem iPad?",
  desc:"Schritt für Schritt: .mcaddon und .mcpack auf dem iPad oder iPhone in Minecraft Bedrock importieren und in der Welt aktivieren.",
  body:[["p","Add-ons sind Dateien mit der Endung <code>.mcaddon</code> oder <code>.mcpack</code>. Auf dem iPad importierst du sie über die Dateien-App und aktivierst sie danach in deiner Welt."],
@@ -156,14 +153,14 @@ const GUIDES=[
 ];
 
 /* Diagnose-Regeln (Prüfschritte, keine Garantien) */
-const PROBLEMS={
+const PROBLEMS_DE={
  import:{label:"Add-on lässt sich nicht importieren",steps:["Prüfe die Dateiendung: .mcaddon oder .mcpack.","Lade die Datei erneut herunter, falls der Download unterbrochen wurde.","Öffne die Datei bewusst mit Minecraft (Öffnen mit / Teilen).","Aktualisiere Minecraft auf die neueste Version.","Stelle sicher, dass genug Speicherplatz frei ist.","Schließe Minecraft komplett und versuche den Import erneut."],guide:"mcaddon-datei-wird-nicht-importiert"},
  nofunc:{label:"Add-on funktioniert nicht",steps:["Prüfe, ob BEIDE Teile aktiviert sind: Resource Pack und Behavior Pack.","Lies auf der Originalseite, ob Spieloptionen („Experimente“) nötig sind, und aktiviere nur diese.","Erstelle zum Test eine neue Welt und aktiviere das Add-on dort.","Prüfe, für welche Minecraft-Version das Add-on gedacht ist.","Entferne andere Packs testweise, falls mehrere gleichzeitig aktiv sind."],guide:"addon-passt-zur-minecraft-version"},
  rp:{label:"Resource Pack fehlt",steps:["Öffne die Welt zum Bearbeiten und suche im Bereich „Resource Packs“.","Tippe beim Pack auf „Aktivieren“. Packs gelten pro Welt.","Prüfe, ob der Import wirklich erfolgreich war.","Prüfe die Dateiendung und lade bei Zweifeln erneut herunter."],guide:"pack-erscheint-nicht-in-den-welteinstellungen"},
  bp:{label:"Behavior Pack funktioniert nicht",steps:["Aktiviere das Behavior Pack im Bereich „Behavior Packs“ der Welt.","Prüfe, ob zusätzlich das passende Resource Pack aktiv sein muss.","Lies in der Beschreibung des Erstellers, ob Spieloptionen („Experimente“) nötig sind.","Teste in einer neuen Welt. Bereits erstellte Welten reagieren manchmal anders.","Vergleiche die Minecraft-Version mit den Angaben des Erstellers."],guide:"resource-pack-vs-behavior-pack"},
  other:{label:"Anderes Problem",steps:["Starte Minecraft und dein Gerät neu.","Aktualisiere Minecraft.","Teste in einer neuen Testwelt, ohne andere Packs.","Notiere die genaue Fehlermeldung und suche damit auf der Originalseite des Add-ons oder im offiziellen Minecraft-Support."],guide:"addon-passt-zur-minecraft-version"}
 };
-const DEVSTEPS={
+const DEVSTEPS_DE={
  ios:"iPad/iPhone: Öffne die Datei in der Dateien-App und wähle über „Öffnen mit“ bzw. „Teilen“ die App Minecraft.",
  android:"Android: Öffne die Datei im Dateimanager und wähle „Öffnen mit“ → Minecraft. Manche Browser-Downloads erscheinen unter „Downloads“.",
  windows:"Windows: Doppelklick auf die .mcaddon- oder .mcpack-Datei öffnet Minecraft Bedrock. Erscheint nichts, wähle „Öffnen mit“ → Minecraft."
@@ -181,13 +178,79 @@ function setMeta(title,desc){document.title=title;const m=document.querySelector
 const SITE_DESC=document.querySelector('meta[name="description"]').content;
 const SITE_TITLE=document.title;
 
+/* ============ Sprache / Language ============ */
+let LANG="de";
+try{LANG=localStorage.getItem("pw_lang")||(/^de/i.test(navigator.language)?"de":"en")}catch(e){LANG=/^de/i.test(navigator.language||"de")?"de":"en"}
+const L=(d,e)=>LANG==="en"?e:d;
+const SD_EN="Free helper for Minecraft Bedrock players: find add-ons, fix installation problems on iPad, iPhone, Android and Windows, and read beginner guides for resource packs and behavior packs.";
+const CATEN={Fahrzeuge:"Vehicles",Militär:"Military",Tiere:"Animals",Technik:"Technology",Horror:"Horror",Abenteuer:"Adventure",Dekoration:"Decoration",Survival:"Survival"};
+const catL=c=>L(c,CATEN[c]||c);
+const ADDON_EN={d1:["Demo: City vehicles","Placeholder entry for an add-on with cars and buses."],d2:["Demo: Field camp pack","Placeholder entry for tents and gear in a field-camp style."],d3:["Demo: Forest animals","Placeholder entry for extra animals in forests."],d4:["Demo: Machine builder","Placeholder entry for machines and conveyor belts."],d5:["Demo: Dark nights","Placeholder entry for spooky creatures at night."],d6:["Demo: Ruins expedition","Placeholder entry for new dungeons and treasure chests."],d7:["Demo: Garden furniture","Placeholder entry for furniture and decoration blocks."],d8:["Demo: Survivalist","Placeholder entry for thirst, extended hunger and crafting."]};
+
+const GUIDES_EN=[
+{slug:"addons-auf-dem-ipad-installieren",date:"2026-10-20",title:"Installing add-ons on an iPad",q:"How do I install Minecraft Bedrock add-ons on an iPad?",
+ desc:"Step by step: import .mcaddon and .mcpack files into Minecraft Bedrock on an iPad or iPhone and activate them in your world.",
+ body:[["p","Add-ons are files ending in <code>.mcaddon</code> or <code>.mcpack</code>. On an iPad you import them through the Files app and then activate them in your world."],
+ ["warn","Only download files from sources you trust. Add-ons are not programs: a file ending in .exe, .apk or .ipa is NOT an add-on and does not belong on your device."],
+ ["h","Step by step"],
+ ["ol",["Download the file (for example in Safari). It usually ends up in the Files app in the “Downloads” folder.","Open the Files app and tap the file.","Choose “Minecraft” as the app to open it with. If nothing is offered: press and hold the file → Share → Minecraft.","Minecraft starts and shows an import message. Wait until it says the import was successful.","Create a new world or edit an existing one and activate the pack under “Resource Packs” or “Behavior Packs”."]],
+ ["h","If it doesn't work"],
+ ["ul",["Does the file end in <code>.zip</code>? You may have to rename it to .mcpack or .mcaddon – check the source first.","Minecraft must be up to date enough for the add-on (see the guide on checking the version).","Do you have enough free storage on your device?"]],
+ ["p","Menu names can change between Minecraft versions. If in doubt, go by the terms in your own version."]]},
+{slug:"resource-pack-vs-behavior-pack",date:"2026-10-19",title:"Resource packs vs. behavior packs",q:"What is the difference between a resource pack and a behavior pack?",
+ desc:"Explained simply: what resource packs and behavior packs do in Minecraft Bedrock, why many add-ons need both, and what to watch out for.",
+ body:[["p","An add-on often consists of two parts that work together."],
+ ["h","Resource pack: the look"],["p","A resource pack changes how something looks and sounds: textures, models, animations, sounds and texts."],
+ ["h","Behavior pack: the behavior"],["p","A behavior pack changes what happens in the game: how mobs behave, which items exist and how things work."],
+ ["h","Why do I often need both?"],["p","A new animal needs a behavior (behavior pack) and an appearance (resource pack). If one part is missing, the object is often invisible, has no texture or does not appear at all."],
+ ["ul",["A <code>.mcaddon</code> file usually contains both packs in one file.","A <code>.mcpack</code> file contains exactly one pack.","You have to activate both packs separately in the world settings."]],
+ ["warn","In some cases behavior packs require extra game options (“experiments”). The add-on's creator describes what is needed."]]},
+{slug:"mcaddon-datei-wird-nicht-importiert",date:"2026-10-18",title:"What to do if a .mcaddon file won't import",q:"Why won't my .mcaddon file import?",
+ desc:"A checklist for import errors with .mcaddon and .mcpack files in Minecraft Bedrock on iPad, Android and Windows.",
+ body:[["p","If nothing happens after opening the file or an error appears, work through these checks in order."],
+ ["ol",["<b>Check the file extension:</b> It must be .mcaddon or .mcpack. For .zip, check the source; sometimes it only contains a folder with packs.","<b>Complete file?</b> Download it again. Interrupted downloads are a common cause.","<b>Open with Minecraft:</b> Use “Open with” or “Share” and pick Minecraft instead of another app.","<b>Update Minecraft:</b> An old version may reject new packs.","<b>Storage space:</b> If your device storage is almost full, the import may fail.","<b>Restart:</b> Fully close Minecraft, reopen it and import again.","<b>Try another source:</b> Check whether the creator has published a newer version."]],
+ ["note","Still broken? Then the pack itself is usually the problem, not you. Write to the creator on the original page."],
+ ["warn","Do not open unknown executable files just because a page claims they “help with the import”."]]},
+{slug:"pack-erscheint-nicht-in-den-welteinstellungen",date:"2026-10-17",title:"Why doesn't a pack show up in the world settings?",q:"Why can't I see my resource pack or behavior pack in my world?",
+ desc:"Imported but not visible? How to find out why a pack does not appear in the world settings in Minecraft Bedrock.",
+ body:[["p","A successful import only means the pack was saved. After that, you still have to activate it for each world separately."],
+ ["ol",["Open “Play” and tap “Edit” at the pencil icon of your world.","On the left, find the sections “Resource Packs” and “Behavior Packs”.","Switch to the tab “My Packs” or “Available” and tap “Activate” on the pack.","Not there? Check that you are looking in the right list for resource and behavior packs."]],
+ ["h","Other causes"],
+ ["ul",["The import did not work (see the guide on the .mcaddon file).","The pack does not match your Minecraft version and is not offered or not loaded.","Packs apply per world, not globally.","On Realms or servers, the operator usually decides which packs apply."]],
+ ["p","Menu names can differ slightly between versions."]]},
+{slug:"addon-passt-zur-minecraft-version",date:"2026-10-16",title:"How to check whether an add-on fits your Minecraft version",q:"How do I know whether an add-on works with my Minecraft version?",
+ desc:"A beginner-friendly guide: find your Minecraft version and compare it with the creator's information.",
+ body:[["p","Many problems happen because an add-on was built for a different Minecraft version. Here is how to check."],
+ ["h","1. Find your version"],["p","Look in the Minecraft settings under “About” or in the game information for the version number (for example 1.21.x). The exact place differs by version and device."],
+ ["h","2. Find the creator's information"],["p","The original page of the add-on often states which versions it is meant for. If nothing is stated, compatibility is unknown."],
+ ["h","3. Protect yourself"],
+ ["ul",["Test new add-ons in a test world first, never in your main world.","Make a copy of your world beforehand (edit world → “Export world” or “Copy”).","Update Minecraft if the add-on requires a newer version."]],
+ ["note","Packwisp never claims an add-on is compatible unless that is proven. Check the source yourself."]]}
+];
+const PROBLEMS_EN={
+ import:{label:"Add-on won't import",steps:["Check the file extension: .mcaddon or .mcpack.","Download the file again if the download was interrupted.","Open the file deliberately with Minecraft (Open with / Share).","Update Minecraft to the latest version.","Make sure enough storage space is free.","Fully close Minecraft and try the import again."],guide:"mcaddon-datei-wird-nicht-importiert"},
+ nofunc:{label:"Add-on doesn't work",steps:["Check that BOTH parts are active: resource pack and behavior pack.","Read on the original page whether game options (“experiments”) are needed, and enable only those.","Create a new world to test and activate the add-on there.","Check which Minecraft version the add-on is meant for.","Temporarily remove other packs if several are active at once."],guide:"addon-passt-zur-minecraft-version"},
+ rp:{label:"Resource pack is missing",steps:["Open the world for editing and look in the “Resource Packs” section.","Tap “Activate” on the pack. Packs apply per world.","Check that the import really succeeded.","Check the file extension and download again if in doubt."],guide:"pack-erscheint-nicht-in-den-welteinstellungen"},
+ bp:{label:"Behavior pack doesn't work",steps:["Activate the behavior pack in the world's “Behavior Packs” section.","Check whether the matching resource pack must also be active.","Read in the creator's description whether game options (“experiments”) are needed.","Test in a new world. Worlds that already exist sometimes react differently.","Compare your Minecraft version with the creator's information."],guide:"resource-pack-vs-behavior-pack"},
+ other:{label:"Other problem",steps:["Restart Minecraft and your device.","Update Minecraft.","Test in a new test world without other packs.","Note the exact error message and search for it on the add-on's original page or in official Minecraft support."],guide:"addon-passt-zur-minecraft-version"}
+};
+const DEVSTEPS_EN={
+ ios:"iPad/iPhone: Open the file in the Files app and choose the Minecraft app via “Open with” or “Share”.",
+ android:"Android: Open the file in your file manager and choose “Open with” → Minecraft. Some browser downloads appear under “Downloads”.",
+ windows:"Windows: Double-click the .mcaddon or .mcpack file to open Minecraft Bedrock. If nothing happens, choose “Open with” → Minecraft."
+};
+const G=()=>LANG==="en"?GUIDES_EN:GUIDES_DE;
+const P=()=>LANG==="en"?PROBLEMS_EN:PROBLEMS_DE;
+const DS=()=>LANG==="en"?DEVSTEPS_EN:DEVSTEPS_DE;
+const adt=a=>LANG==="en"?ADDON_EN[a.id]:[a.name,a.desc];
+
 /* ============ Komponenten ============ */
 function addonCard(a){
- const f=favs.includes(a.id);
- return `<div class="card addon"><h3><span>${esc(a.name)}</span><button class="fav ${f?"on":""}" data-fav="${a.id}" aria-pressed="${f}" aria-label="${f?"Aus Favoriten entfernen":"Zu Favoriten hinzufügen"}">${f?"★":"☆"}</button></h3>
- <p>${esc(a.desc)}</p>
- <div><span class="tag">${esc(a.cat)}</span><span class="tag demo">DEMO</span>${a.ok?'<span class="tag">geprüft</span>':'<span class="tag no">nicht geprüft</span>'}</div>
- <div class="meta">Geräte: ${a.dev.length?a.dev.map(d=>DEVICES[d]).join(", "):"unbekannt"}<br>Getestete Versionen: ${a.ver?esc(a.ver):"keine Angabe"}<br>Quelle: ${a.src?`<a href="${esc(a.src)}" target="_blank" rel="noopener noreferrer">Originalquelle</a>`:"kein Link (Demo-Eintrag)"}</div></div>`;
+ const f=favs.includes(a.id),e=adt(a);
+ return `<div class="card addon"><h3><span>${esc(e[0])}</span><button class="fav ${f?"on":""}" data-fav="${a.id}" aria-pressed="${f}" aria-label="${L(f?"Aus Favoriten entfernen":"Zu Favoriten hinzufügen",f?"Remove from favorites":"Add to favorites")}">${f?"★":"☆"}</button></h3>
+ <p>${esc(e[1])}</p>
+ <div><span class="tag">${esc(catL(a.cat))}</span><span class="tag demo">DEMO</span>${a.ok?`<span class="tag">${L("geprüft","verified")}</span>`:`<span class="tag no">${L("nicht geprüft","not verified")}</span>`}</div>
+ <div class="meta">${L("Geräte","Devices")}: ${a.dev.length?a.dev.map(d=>DEVICES[d]).join(", "):L("unbekannt","unknown")}<br>${L("Getestete Versionen","Tested versions")}: ${a.ver?esc(a.ver):L("keine Angabe","not specified")}<br>${L("Quelle","Source")}: ${a.src?`<a href="${esc(a.src)}" target="_blank" rel="noopener noreferrer">${L("Originalquelle","Original source")}</a>`:L("kein Link (Demo-Eintrag)","no link (demo entry)")}</div></div>`;
 }
 function guideRow(g){return `<a class="row" href="#/anleitung/${g.slug}"><b>${esc(g.title)}</b><span>${esc(g.q)}</span></a>`}
 function renderBody(b){return b.map(([t,v])=>{
@@ -195,115 +258,139 @@ function renderBody(b){return b.map(([t,v])=>{
  if(t==="p")return `<p>${v}</p>`;
  if(t==="ul")return `<ul>${v.map(x=>`<li>${x}</li>`).join("")}</ul>`;
  if(t==="ol")return `<ol class="steps">${v.map(x=>`<li>${x}</li>`).join("")}</ol>`;
- if(t==="warn")return `<div class="note bad"><b>Sicherheit:</b> ${v}</div>`;
+ if(t==="warn")return `<div class="note bad"><b>${L("Sicherheit","Safety")}:</b> ${v}</div>`;
  if(t==="note")return `<div class="note">${v}</div>`;return""}).join("")}
 
 /* ============ Seiten ============ */
 function pageHome(){
- setMeta(SITE_TITLE,SITE_DESC);
- const latest=[...GUIDES].sort((a,b)=>b.date.localeCompare(a.date)).slice(0,3);
- return `<section class="hero"><h1>Dein Minecraft-Bedrock-Helfer.</h1>
- <p class="sub">Finde passende Add-ons, löse Installationsprobleme und mach mehr aus deiner Minecraft-Welt.</p>
- <form class="search" id="gsearch" role="search"><label class="sr" for="q">Suche</label><input id="q" type="search" placeholder="Zum Beispiel: mcaddon iPad" autocomplete="off"><button class="btn" type="submit">Suchen</button></form>
+ setMeta(L("Packwisp – Dein Minecraft-Bedrock-Helfer","Packwisp – Your Minecraft Bedrock helper"),L(SITE_DESC,SD_EN));
+ const latest=[...G()].sort((a,b)=>b.date.localeCompare(a.date)).slice(0,3);
+ return `<section class="hero"><h1>${L("Dein Minecraft-Bedrock-Helfer.","Your Minecraft Bedrock helper.")}</h1>
+ <p class="sub">${L("Finde passende Add-ons, löse Installationsprobleme und mach mehr aus deiner Minecraft-Welt.","Find fitting add-ons, solve installation problems and get more out of your Minecraft world.")}</p>
+ <form class="search" id="gsearch" role="search"><label class="sr" for="q">${L("Suche","Search")}</label><input id="q" type="search" placeholder="${L("Zum Beispiel: mcaddon iPad","For example: mcaddon iPad")}" autocomplete="off"><button class="btn" type="submit">${L("Suchen","Search")}</button></form>
  <div id="sres"></div></section>
  <section class="grid" style="margin-top:22px">
- <a class="feat" href="#/addons"><span class="ic" aria-hidden="true">🧩</span><h3>Add-ons entdecken</h3><p>Stöbere nach Kategorie und Gerät. Alle Angaben sind klar als geprüft oder ungeprüft markiert.</p></a>
- <a class="feat" href="#/diagnose"><span class="ic" aria-hidden="true">🔧</span><h3>Installationsprobleme lösen</h3><p>Drei Fragen, dann bekommst du passende Prüfschritte für dein Gerät.</p></a>
- <a class="feat" href="#/anleitungen"><span class="ic" aria-hidden="true">📖</span><h3>Anleitungen ansehen</h3><p>Verständliche Hilfe für Einsteiger, Schritt für Schritt erklärt.</p></a></section>
- <section class="sec"><h2>Beliebte Hilfethemen</h2><div class="chips">${GUIDES.map(g=>`<a class="chip" href="#/anleitung/${g.slug}">${esc(g.title)}</a>`).join("")}</div></section>
- <section class="sec"><h2>Zuletzt hinzugefügt</h2><div class="list">${latest.map(guideRow).join("")}</div></section>
- <div class="note ok" style="margin-top:34px"><b>Hinweis:</b> Die Add-on-Sammlung enthält aktuell nur Demo-Einträge. Es gibt noch keine geprüften Add-ons.</div>`;
+ <a class="feat" href="#/addons"><span class="ic" aria-hidden="true">🧩</span><h3>${L("Add-ons entdecken","Discover add-ons")}</h3><p>${L("Stöbere nach Kategorie und Gerät. Alle Angaben sind klar als geprüft oder ungeprüft markiert.","Browse by category and device. All details are clearly marked as verified or unverified.")}</p></a>
+ <a class="feat" href="#/diagnose"><span class="ic" aria-hidden="true">🔧</span><h3>${L("Installationsprobleme lösen","Fix installation problems")}</h3><p>${L("Drei Fragen, dann bekommst du passende Prüfschritte für dein Gerät.","Three questions, then you get matching troubleshooting steps for your device.")}</p></a>
+ <a class="feat" href="#/anleitungen"><span class="ic" aria-hidden="true">📖</span><h3>${L("Anleitungen ansehen","Read guides")}</h3><p>${L("Verständliche Hilfe für Einsteiger, Schritt für Schritt erklärt.","Clear help for beginners, explained step by step.")}</p></a></section>
+ <section class="sec"><h2>${L("Beliebte Hilfethemen","Popular help topics")}</h2><div class="chips">${G().map(g=>`<a class="chip" href="#/anleitung/${g.slug}">${esc(g.title)}</a>`).join("")}</div></section>
+ <section class="sec"><h2>${L("Zuletzt hinzugefügt","Recently added")}</h2><div class="list">${latest.map(guideRow).join("")}</div></section>
+ <div class="note ok" style="margin-top:34px"><b>${L("Hinweis","Note")}:</b> ${L("Die Add-on-Sammlung enthält aktuell nur Demo-Einträge. Es gibt noch keine geprüften Add-ons.","The add-on collection currently contains demo entries only. There are no verified add-ons yet.")}</div>`;
 }
+function hit(words,t){const n=norm(t);return words.every(w=>n.includes(w))}
 function search(q){
- const n=norm(q.trim());if(!n)return null;
- const words=n.split(/\s+/);
- const hit=t=>words.every(w=>norm(t).includes(w));
- return{g:GUIDES.filter(g=>hit(g.title+" "+g.q+" "+g.desc)),a:ADDONS.filter(a=>hit(a.name+" "+a.desc+" "+a.cat))};
+ const n=norm(q.trim());if(!n)return null;const w=n.split(/\s+/);
+ return{g:G().filter(g=>hit(w,g.title+" "+g.q+" "+g.desc)),a:ADDONS_DE.filter(a=>{const e=adt(a);return hit(w,e[0]+" "+e[1]+" "+catL(a.cat))})};
 }
 function pageGuides(){
- setMeta("Anleitungen für Minecraft Bedrock – Packwisp","Verständliche deutsche Anleitungen zu Add-ons, Resource Packs, Behavior Packs und Importproblemen in Minecraft Bedrock.");
- return `<h1>Anleitungen</h1><p class="sub" style="color:var(--mu)">Für Anfänger geschrieben. Jede Anleitung beantwortet eine konkrete Frage.</p><div class="list">${GUIDES.map(guideRow).join("")}</div>`;
+ setMeta(L("Anleitungen für Minecraft Bedrock – Packwisp","Guides for Minecraft Bedrock – Packwisp"),L("Verständliche deutsche Anleitungen zu Add-ons, Resource Packs, Behavior Packs und Importproblemen in Minecraft Bedrock.","Clear guides on add-ons, resource packs, behavior packs and import problems in Minecraft Bedrock."));
+ return `<h1>${L("Anleitungen","Guides")}</h1><p class="sub" style="color:var(--mu)">${L("Für Anfänger geschrieben. Jede Anleitung beantwortet eine konkrete Frage.","Written for beginners. Each guide answers one specific question.")}</p><div class="list">${G().map(guideRow).join("")}</div>`;
 }
 function pageGuide(slug){
- const g=GUIDES.find(x=>x.slug===slug);if(!g)return page404();
+ const g=G().find(x=>x.slug===slug);if(!g)return page404();
  setMeta(g.title+" – Packwisp",g.desc);
- const rel=GUIDES.filter(x=>x.slug!==slug).slice(0,3);
- return `<article><div class="crumb"><a href="#/anleitungen">Anleitungen</a> / ${esc(g.title)}</div><h1>${esc(g.title)}</h1>
+ const rel=G().filter(x=>x.slug!==slug).slice(0,3);
+ return `<article><div class="crumb"><a href="#/anleitungen">${L("Anleitungen","Guides")}</a> / ${esc(g.title)}</div><h1>${esc(g.title)}</h1>
  <p style="color:var(--mu);font-size:1.1rem">${esc(g.q)}</p>${renderBody(g.body)}
- <p><a class="btn" href="#/diagnose">Zur Diagnose</a></p></article>
- <section class="sec"><h2>Weitere Anleitungen</h2><div class="list">${rel.map(guideRow).join("")}</div></section>`;
+ <p><a class="btn" href="#/diagnose">${L("Zur Diagnose","Go to diagnosis")}</a></p></article>
+ <section class="sec"><h2>${L("Weitere Anleitungen","More guides")}</h2><div class="list">${rel.map(guideRow).join("")}</div></section>`;
 }
 function pageAddons(){
- setMeta("Add-on-Verzeichnis für Minecraft Bedrock – Packwisp","Add-ons nach Kategorie und Gerät filtern. Mit Kennzeichnung geprüfter und ungeprüfter Angaben.");
- return `<h1>Add-on-Verzeichnis</h1>
- <div class="note"><b>Demo:</b> Alle Einträge sind Platzhalter ohne echte Downloads, Bewertungen oder Kompatibilitätsnachweise. Sei vorsichtig bei unbekannten Downloads und ausführbaren Dateien (.exe, .apk, .ipa).</div>
- <div class="filters"><div><label for="fq">Suche</label><input id="fq" type="search" placeholder="Name oder Stichwort"></div>
- <div><label for="fc">Kategorie</label><select id="fc"><option value="">Alle</option>${CATS.map(c=>`<option>${c}</option>`).join("")}</select></div>
- <div><label for="fd">Gerät</label><select id="fd"><option value="">Alle</option>${Object.entries(DEVICES).map(([k,v])=>`<option value="${k}">${v}</option>`).join("")}</select></div></div>
- <div class="chips"><label class="chip" style="margin:0"><input type="checkbox" id="fv" style="width:auto;min-height:0;margin-right:6px"> nur geprüfte</label><label class="chip" style="margin:0"><input type="checkbox" id="ff" style="width:auto;min-height:0;margin-right:6px"> nur Favoriten</label></div>
+ setMeta(L("Add-on-Verzeichnis für Minecraft Bedrock – Packwisp","Add-on directory for Minecraft Bedrock – Packwisp"),L("Add-ons nach Kategorie und Gerät filtern. Mit Kennzeichnung geprüfter und ungeprüfter Angaben.","Filter add-ons by category and device, with verified and unverified details clearly marked."));
+ return `<h1>${L("Add-on-Verzeichnis","Add-on directory")}</h1>
+ <div class="note"><b>Demo:</b> ${L("Alle Einträge sind Platzhalter ohne echte Downloads, Bewertungen oder Kompatibilitätsnachweise. Sei vorsichtig bei unbekannten Downloads und ausführbaren Dateien (.exe, .apk, .ipa).","All entries are placeholders without real downloads, ratings or compatibility proof. Be careful with unknown downloads and executable files (.exe, .apk, .ipa).")}</div>
+ <div class="filters"><div><label for="fq">${L("Suche","Search")}</label><input id="fq" type="search" placeholder="${L("Name oder Stichwort","Name or keyword")}"></div>
+ <div><label for="fc">${L("Kategorie","Category")}</label><select id="fc"><option value="">${L("Alle","All")}</option>${CATS.map(c=>`<option value="${c}">${catL(c)}</option>`).join("")}</select></div>
+ <div><label for="fd">${L("Gerät","Device")}</label><select id="fd"><option value="">${L("Alle","All")}</option>${Object.entries(DEVICES).map(([k,v])=>`<option value="${k}">${v}</option>`).join("")}</select></div></div>
+ <div class="chips"><label class="chip" style="margin:0"><input type="checkbox" id="fv" style="width:auto;min-height:0;margin-right:6px"> ${L("nur geprüfte","verified only")}</label><label class="chip" style="margin:0"><input type="checkbox" id="ff" style="width:auto;min-height:0;margin-right:6px"> ${L("nur Favoriten","favorites only")}</label></div>
  <p id="cnt" style="color:var(--mu)"></p><div class="grid" id="alist"></div>`;
 }
 function bindAddons(){
  const run=()=>{
-  const q=norm($("#fq").value),c=$("#fc").value,d=$("#fd").value,v=$("#fv").checked,f=$("#ff").checked;
-  const res=ADDONS.filter(a=>(!c||a.cat===c)&&(!d||a.dev.includes(d))&&(!v||a.ok)&&(!f||favs.includes(a.id))&&(!q||q.split(/\s+/).every(w=>norm(a.name+" "+a.desc+" "+a.cat).includes(w))));
-  $("#cnt").textContent=res.length+" von "+ADDONS.length+" Einträgen";
-  $("#alist").innerHTML=res.length?res.map(addonCard).join(""):`<div class="empty" style="grid-column:1/-1"><b>Nichts gefunden.</b><br>Ändere die Filter oder entferne einen Suchbegriff. Filter wie „nur geprüfte“ liefern aktuell keine Treffer, weil noch keine Einträge geprüft sind.</div>`;
+  const q=norm($("#fq").value).split(/\s+/).filter(Boolean),c=$("#fc").value,d=$("#fd").value,v=$("#fv").checked,f=$("#ff").checked;
+  const res=ADDONS_DE.filter(a=>{const e=adt(a);return(!c||a.cat===c)&&(!d||a.dev.includes(d))&&(!v||a.ok)&&(!f||favs.includes(a.id))&&hit(q,e[0]+" "+e[1]+" "+catL(a.cat))});
+  $("#cnt").textContent=L(res.length+" von "+ADDONS_DE.length+" Einträgen",res.length+" of "+ADDONS_DE.length+" entries");
+  $("#alist").innerHTML=res.length?res.map(addonCard).join(""):`<div class="empty" style="grid-column:1/-1"><b>${L("Nichts gefunden.","Nothing found.")}</b><br>${L("Ändere die Filter oder entferne einen Suchbegriff. Filter wie „nur geprüfte“ liefern aktuell keine Treffer, weil noch keine Einträge geprüft sind.","Change the filters or remove a search term. Filters like “verified only” currently show nothing because no entries have been verified yet.")}</div>`;
  };
  ["fq","fc","fd","fv","ff"].forEach(id=>$("#"+id).addEventListener("input",run));
  window.__rerun=run;run();
 }
 function pageFavs(){
- setMeta("Favoriten – Packwisp","Deine lokal gespeicherten Favoriten.");
- const list=ADDONS.filter(a=>favs.includes(a.id));
- return `<h1>Favoriten</h1>${storageOk?"":'<div class="note bad">Dein Browser blockiert das lokale Speichern. Favoriten gehen beim Neuladen verloren (z. B. im privaten Modus).</div>'}
- <p style="color:var(--mu)">Gespeichert nur in deinem Browser, nirgends sonst.</p>
- ${list.length?`<div class="grid">${list.map(addonCard).join("")}</div>`:`<div class="empty"><b>Noch keine Favoriten.</b><br>Tippe im <a href="#/addons">Add-on-Verzeichnis</a> auf den Stern.</div>`}`;
+ setMeta(L("Favoriten – Packwisp","Favorites – Packwisp"),L("Deine lokal gespeicherten Favoriten.","Your locally saved favorites."));
+ const list=ADDONS_DE.filter(a=>favs.includes(a.id));
+ return `<h1>${L("Favoriten","Favorites")}</h1>${storageOk?"":`<div class="note bad">${L("Dein Browser blockiert das lokale Speichern. Favoriten gehen beim Neuladen verloren (z. B. im privaten Modus).","Your browser blocks local storage. Favorites will be lost on reload (for example in private mode).")}</div>`}
+ <p style="color:var(--mu)">${L("Gespeichert nur in deinem Browser, nirgends sonst.","Saved only in your browser, nowhere else.")}</p>
+ ${list.length?`<div class="grid">${list.map(addonCard).join("")}</div>`:`<div class="empty"><b>${L("Noch keine Favoriten.","No favorites yet.")}</b><br>${L('Tippe im <a href="#/addons">Add-on-Verzeichnis</a> auf den Stern.','Tap the star in the <a href="#/addons">add-on directory</a>.')}</div>`}`;
 }
-function page404(){setMeta("Seite nicht gefunden – Packwisp",SITE_DESC);return `<div class="empty"><h1>Seite nicht gefunden</h1><p>Diese Adresse gibt es nicht. Gehe zurück zur <a href="#/">Startseite</a> oder öffne die <a href="#/anleitungen">Anleitungen</a>.</p></div>`}
+function page404(){setMeta(L("Seite nicht gefunden – Packwisp","Page not found – Packwisp"),L(SITE_DESC,SD_EN));return `<div class="empty"><h1>${L("Seite nicht gefunden","Page not found")}</h1><p>${L('Diese Adresse gibt es nicht. Gehe zurück zur <a href="#/">Startseite</a> oder öffne die <a href="#/anleitungen">Anleitungen</a>.','This address does not exist. Go back to the <a href="#/">home page</a> or open the <a href="#/anleitungen">guides</a>.')}</p></div>`}
 
-/* ============ Diagnose-Assistent ============ */
+/* ============ Impressum ============ */
+const IMP={name:"",street:"",zip_city:"",email:""}; // HIER deine Angaben eintragen
+function pageImpressum(){
+ setMeta("Impressum – Packwisp","Impressum und Anbieterkennzeichnung von Packwisp.");
+ const miss=Object.values(IMP).some(v=>!v.trim());
+ return `<h1>${L("Impressum","Legal notice (Impressum)")}</h1>
+ ${LANG==="en"?'<p style="color:var(--mu)">This notice is required under German law and is therefore provided in German.</p>':""}
+ ${miss?'<div class="note bad"><b>Achtung:</b> Die Anbieterangaben sind noch nicht ausgefüllt. Trage Name, Anschrift und E-Mail ein, bevor du die Seite öffentlich machst.</div>':""}
+ <h2>Angaben gemäß § 5 DDG</h2><p>${esc(IMP.name)}<br>${esc(IMP.street)}<br>${esc(IMP.zip_city)}</p>
+ <h2>Kontakt</h2><p>E-Mail: ${IMP.email?`<a href="mailto:${esc(IMP.email)}">${esc(IMP.email)}</a>`:""}</p>
+ <h2>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h2><p>${esc(IMP.name)}, Anschrift wie oben</p>
+ <h2>Hinweis</h2><p>Packwisp ist ein inoffizielles Fan-Projekt und nicht mit Mojang, Microsoft oder Minecraft verbunden. „Minecraft“ ist eine Marke von Mojang Synergies AB.</p>`;
+}
+
+/* ============ Diagnose / Diagnosis ============ */
 let D={step:0,dev:null,ver:"",prob:null};
 function pageDiag(){
- setMeta("Problem-Diagnose für Minecraft-Add-ons – Packwisp","Beantworte drei Fragen und erhalte passende Prüfschritte bei Add-on-Problemen auf iPad, iPhone, Android und Windows.");
- const prog=`<div class="prog" aria-hidden="true">${[0,1,2,3].map(i=>`<i class="${i<=D.step?"d":""}"></i>`).join("")}</div>`;
- let h=`<h1>Problem-Diagnose</h1>${prog}`;
- if(D.step===0)h+=`<h2>Auf welchem Gerät spielst du?</h2><div class="opts">${Object.entries(DEVICES).map(([k,v])=>`<button class="opt" data-dev="${k}">${v}</button>`).join("")}</div>`;
- else if(D.step===1)h+=`<h2>Welche Minecraft-Version hast du?</h2><p style="color:var(--mu)">Zum Beispiel 1.21.50. Du findest sie meist in den Einstellungen im Bereich „Info“. Weißt du sie nicht, lass das Feld leer.</p>
-  <label class="sr" for="ver">Version</label><input id="ver" inputmode="decimal" maxlength="20" placeholder="z. B. 1.21.50" value="${esc(D.ver)}">
-  <p style="margin-top:14px"><button class="btn" data-next>Weiter</button> <button class="btn ghost" data-back>Zurück</button></p>`;
- else if(D.step===2)h+=`<h2>Was ist das Problem?</h2><div class="opts">${Object.entries(PROBLEMS).map(([k,v])=>`<button class="opt" data-prob="${k}">${v.label}</button>`).join("")}</div><p><button class="btn ghost" data-back>Zurück</button></p>`;
+ setMeta(L("Problem-Diagnose für Minecraft-Add-ons – Packwisp","Add-on problem diagnosis for Minecraft – Packwisp"),L("Beantworte drei Fragen und erhalte passende Prüfschritte bei Add-on-Problemen auf iPad, iPhone, Android und Windows.","Answer three questions and get matching troubleshooting steps for add-on problems on iPad, iPhone, Android and Windows."));
+ const PR=P(),prog=`<div class="prog" aria-hidden="true">${[0,1,2,3].map(i=>`<i class="${i<=D.step?"d":""}"></i>`).join("")}</div>`;
+ let h=`<h1>${L("Problem-Diagnose","Problem diagnosis")}</h1>${prog}`;
+ if(D.step===0)h+=`<h2>${L("Auf welchem Gerät spielst du?","Which device do you play on?")}</h2><div class="opts">${Object.entries(DEVICES).map(([k,v])=>`<button class="opt" data-dev="${k}">${v}</button>`).join("")}</div>`;
+ else if(D.step===1)h+=`<h2>${L("Welche Minecraft-Version hast du?","Which Minecraft version do you have?")}</h2><p style="color:var(--mu)">${L("Zum Beispiel 1.21.50. Du findest sie meist in den Einstellungen im Bereich „Info“. Weißt du sie nicht, lass das Feld leer.","For example 1.21.50. You can usually find it in the settings under “About”. If you don't know it, leave the field empty.")}</p>
+  <label class="sr" for="ver">${L("Version","Version")}</label><input id="ver" inputmode="decimal" maxlength="20" placeholder="${L("z. B. 1.21.50","e.g. 1.21.50")}" value="${esc(D.ver)}">
+  <p style="margin-top:14px"><button class="btn" data-next>${L("Weiter","Next")}</button> <button class="btn ghost" data-back>${L("Zurück","Back")}</button></p>`;
+ else if(D.step===2)h+=`<h2>${L("Was ist das Problem?","What is the problem?")}</h2><div class="opts">${Object.entries(PR).map(([k,v])=>`<button class="opt" data-prob="${k}">${v.label}</button>`).join("")}</div><p><button class="btn ghost" data-back>${L("Zurück","Back")}</button></p>`;
  else{
-  const p=PROBLEMS[D.prob],v=D.ver.trim(),ok=/^\d+(\.\d+){1,3}$/.test(v);
-  h+=`<div class="card"><b>${DEVICES[D.dev]}</b> · Version: ${ok?esc(v):"unbekannt"} · ${p.label}</div>`;
-  if(!v)h+=`<div class="note">Deine Version fehlt. Prüfe sie in den Minecraft-Einstellungen und vergleiche sie mit den Angaben des Add-on-Erstellers. Ohne diese Angabe kann niemand sagen, ob das Add-on passt.</div>`;
-  else if(!ok)h+=`<div class="note">„${esc(v)}“ sieht nicht wie eine Versionsnummer aus (erwartet: 1.21.50). Prüfe deine Eingabe.</div>`;
-  else h+=`<div class="note">Packwisp kann nicht prüfen, ob ein Add-on zu Version ${esc(v)} passt. Vergleiche mit den Angaben des Erstellers.</div>`;
-  h+=`<h2>Das kannst du prüfen</h2><ol class="steps"><li>${DEVSTEPS[D.dev]}</li>${p.steps.map(s=>`<li>${s}</li>`).join("")}</ol>
-  <div class="note bad"><b>Sicherheit:</b> Lade nichts von unbekannten Seiten. Add-ons sind keine .exe-, .apk- oder .ipa-Dateien.</div>
-  <p>Ausführliche Hilfe: <a href="#/anleitung/${p.guide}">${esc(GUIDES.find(g=>g.slug===p.guide).title)}</a></p>
-  <p><button class="btn ghost" data-reset>Neue Diagnose</button></p>`;
+  const p=PR[D.prob],v=D.ver.trim(),ok=/^\d+(\.\d+){1,3}$/.test(v);
+  h+=`<div class="card"><b>${DEVICES[D.dev]}</b> · ${L("Version","Version")}: ${ok?esc(v):L("unbekannt","unknown")} · ${p.label}</div>`;
+  if(!v)h+=`<div class="note">${L("Deine Version fehlt. Prüfe sie in den Minecraft-Einstellungen und vergleiche sie mit den Angaben des Add-on-Erstellers. Ohne diese Angabe kann niemand sagen, ob das Add-on passt.","Your version is missing. Check it in the Minecraft settings and compare it with the add-on creator's information. Without it, nobody can say whether the add-on fits.")}</div>`;
+  else if(!ok)h+=`<div class="note">${L("„"+esc(v)+"“ sieht nicht wie eine Versionsnummer aus (erwartet: 1.21.50). Prüfe deine Eingabe.","“"+esc(v)+"” does not look like a version number (expected: 1.21.50). Check your input.")}</div>`;
+  else h+=`<div class="note">${L("Packwisp kann nicht prüfen, ob ein Add-on zu Version "+esc(v)+" passt. Vergleiche mit den Angaben des Erstellers.","Packwisp cannot check whether an add-on fits version "+esc(v)+". Compare with the creator's information.")}</div>`;
+  h+=`<h2>${L("Das kannst du prüfen","What you can check")}</h2><ol class="steps"><li>${DS()[D.dev]}</li>${p.steps.map(s=>`<li>${s}</li>`).join("")}</ol>
+  <div class="note bad"><b>${L("Sicherheit","Safety")}:</b> ${L("Lade nichts von unbekannten Seiten. Add-ons sind keine .exe-, .apk- oder .ipa-Dateien.","Do not download anything from unknown sites. Add-ons are not .exe, .apk or .ipa files.")}</div>
+  <p>${L("Ausführliche Hilfe","More help")}: <a href="#/anleitung/${p.guide}">${esc(G().find(g=>g.slug===p.guide).title)}</a></p>
+  <p><button class="btn ghost" data-reset>${L("Neue Diagnose","New diagnosis")}</button></p>`;
  }
  return h;
 }
 
-/* ============ Router & Events ============ */
+/* ============ Rahmen, Router & Events ============ */
+function chrome(){
+ document.documentElement.lang=LANG;
+ const n=[["home","",L("Start","Home")],["diagnose","diagnose",L("Diagnose","Diagnosis")],["addons","addons","Add-ons"],["anleitungen","anleitungen",L("Anleitungen","Guides")],["favoriten","favoriten",L("★ Favoriten","★ Favorites")]];
+ $("#nav").innerHTML=n.map(([k,h,l])=>`<a href="#/${h}" data-r="${k}">${l}</a>`).join("");
+ $("#nav").setAttribute("aria-label",L("Hauptnavigation","Main navigation"));
+ const b=$("#langbtn");b.textContent=LANG==="de"?"EN":"DE";b.setAttribute("aria-label",L("Switch to English","Auf Deutsch wechseln"));
+ $("#foot").innerHTML=`<p>${L("<b>Packwisp</b> ist ein inoffizielles Fan-Projekt und nicht mit Mojang, Microsoft oder Minecraft verbunden. „Minecraft“ ist eine Marke von Mojang Synergies AB. Diese Seite nutzt keine offiziellen Logos oder Grafiken.","<b>Packwisp</b> is an unofficial fan project and is not affiliated with Mojang, Microsoft or Minecraft. “Minecraft” is a trademark of Mojang Synergies AB. This site uses no official logos or artwork.")}</p>
+ <p>${L("Alle Angaben ohne Kennzeichnung „geprüft“ sind unverifiziert. Die Seite speichert nur deine Favoriten und deine Sprachwahl lokal in deinem Browser und sendet keine Daten an Server.","All details without the label “verified” are unverified. This site only stores your favorites and language choice locally in your browser and sends no data to servers.")}</p>
+ <p><a href="#/impressum">${L("Impressum","Legal notice (Impressum)")}</a></p>`;
+}
 function render(){
  const hash=location.hash.replace(/^#\/?/,"");const [r,arg]=hash.split("/");const app=$("#app");
  const key=r||"home";
  document.querySelectorAll("#nav a").forEach(a=>a.classList.toggle("on",a.dataset.r===(key==="anleitung"?"anleitungen":key)));
- app.innerHTML='<div class="spin" role="status" aria-label="Lädt"></div>';
+ app.innerHTML=`<div class="spin" role="status" aria-label="${L("Lädt","Loading")}"></div>`;
  try{
   let html;
-  switch(key){case"home":html=pageHome();break;case"diagnose":html=pageDiag();break;case"addons":html=pageAddons();break;case"anleitungen":html=pageGuides();break;case"anleitung":html=pageGuide(arg);break;case"favoriten":html=pageFavs();break;default:html=page404()}
+  switch(key){case"home":html=pageHome();break;case"diagnose":html=pageDiag();break;case"addons":html=pageAddons();break;case"anleitungen":html=pageGuides();break;case"anleitung":html=pageGuide(arg);break;case"favoriten":html=pageFavs();break;case"impressum":html=pageImpressum();break;default:html=page404()}
   app.innerHTML=html;
   if(key==="addons")bindAddons();
   if(key!=="diagnose"||D.step===0)window.scrollTo(0,0);
- }catch(e){app.innerHTML=`<div class="note bad"><b>Fehler:</b> Die Seite konnte nicht geladen werden. Lade sie neu oder gehe zur <a href="#/">Startseite</a>.</div>`;console.error(e)}
+ }catch(e){app.innerHTML=`<div class="note bad"><b>${L("Fehler","Error")}:</b> ${L('Die Seite konnte nicht geladen werden. Lade sie neu oder gehe zur <a href="#/">Startseite</a>.','The page could not be loaded. Reload it or go to the <a href="#/">home page</a>.')}</div>`;console.error(e)}
 }
 window.addEventListener("hashchange",render);
 document.addEventListener("click",e=>{
  const t=e.target.closest("button");if(!t)return;
+ if(t.id==="langbtn"){LANG=LANG==="de"?"en":"de";try{localStorage.setItem("pw_lang",LANG)}catch(x){}chrome();render();return}
  if(t.dataset.fav){const id=t.dataset.fav;favs=favs.includes(id)?favs.filter(x=>x!==id):[...favs,id];saveFavs();
   if(window.__rerun&&$("#alist"))window.__rerun();else render()}
  else if(t.dataset.dev){D.dev=t.dataset.dev;D.step=1;render()}
@@ -315,11 +402,11 @@ document.addEventListener("click",e=>{
 document.addEventListener("submit",e=>{
  if(e.target.id!=="gsearch")return;e.preventDefault();
  const r=search($("#q").value),box=$("#sres");
- if(!r){box.innerHTML='<div class="note">Gib einen Suchbegriff ein, zum Beispiel „iPad“ oder „Resource Pack“.</div>';return}
- if(!r.g.length&&!r.a.length){box.innerHTML='<div class="empty"><b>Keine Treffer.</b><br>Versuche ein anderes Wort oder schau in die <a href="#/anleitungen">Anleitungen</a>.</div>';return}
- box.innerHTML=(r.g.length?`<h3 style="margin-top:14px">Anleitungen</h3><div class="list">${r.g.map(guideRow).join("")}</div>`:"")+(r.a.length?`<h3 style="margin-top:14px">Add-ons (Demo)</h3><div class="grid">${r.a.map(addonCard).join("")}</div>`:"");
+ if(!r){box.innerHTML=`<div class="note">${L("Gib einen Suchbegriff ein, zum Beispiel „iPad“ oder „Resource Pack“.","Enter a search term, for example “iPad” or “resource pack”.")}</div>`;return}
+ if(!r.g.length&&!r.a.length){box.innerHTML=`<div class="empty"><b>${L("Keine Treffer.","No results.")}</b><br>${L('Versuche ein anderes Wort oder schau in die <a href="#/anleitungen">Anleitungen</a>.','Try another word or look at the <a href="#/anleitungen">guides</a>.')}</div>`;return}
+ box.innerHTML=(r.g.length?`<h3 style="margin-top:14px">${L("Anleitungen","Guides")}</h3><div class="list">${r.g.map(guideRow).join("")}</div>`:"")+(r.a.length?`<h3 style="margin-top:14px">${L("Add-ons (Demo)","Add-ons (demo)")}</h3><div class="grid">${r.a.map(addonCard).join("")}</div>`:"");
 });
-render();
+chrome();render();
 </script>
 </body>
 </html>
