@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>BedrockBuddy – Dein Minecraft-Bedrock-Helfer</title>
+<title>Packwisp – Dein Minecraft-Bedrock-Helfer</title>
 <meta name="description" content="Kostenloser deutscher Helfer für Minecraft Bedrock: Add-ons finden, Installationsprobleme auf iPad, iPhone, Android und Windows lösen, Anleitungen für Resource Packs und Behavior Packs.">
 <meta name="theme-color" content="#14181a">
 <meta name="color-scheme" content="dark">
@@ -86,13 +86,13 @@ footer{border-top:2px solid var(--line);padding:24px 0 40px;color:var(--mu);font
 </head>
 <body>
 <header class="top"><div class="wrap bar">
-<a class="logo" href="#/"><span class="px" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>BedrockBuddy</a>
+<a class="logo" href="#/"><span class="px" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>Packwisp</a>
 <nav id="nav" aria-label="Hauptnavigation">
 <a href="#/" data-r="home">Start</a><a href="#/diagnose" data-r="diagnose">Diagnose</a><a href="#/addons" data-r="addons">Add-ons</a><a href="#/anleitungen" data-r="anleitungen">Anleitungen</a><a href="#/favoriten" data-r="favoriten">★ Favoriten</a>
 </nav></div></header>
 <main><div class="wrap" id="app" aria-live="polite"></div></main>
 <footer><div class="wrap">
-<p><b>BedrockBuddy</b> ist ein inoffizielles Fan-Projekt und nicht mit Mojang, Microsoft oder Minecraft verbunden. „Minecraft“ ist eine Marke von Mojang Synergies AB. Diese Seite nutzt keine offiziellen Logos oder Grafiken.</p>
+<p><b>Packwisp</b> ist ein inoffizielles Fan-Projekt und nicht mit Mojang, Microsoft oder Minecraft verbunden. „Minecraft“ ist eine Marke von Mojang Synergies AB. Diese Seite nutzt keine offiziellen Logos oder Grafiken.</p>
 <p>Alle Angaben ohne Kennzeichnung „geprüft“ sind unverifiziert. Die Seite speichert nur deine Favoriten lokal in deinem Browser und sendet keine Daten an Server.</p>
 </div></footer>
 
@@ -152,7 +152,7 @@ const GUIDES=[
  ["h","2. Angaben des Erstellers suchen"],["p","Auf der Originalseite des Add-ons steht oft, für welche Versionen es gedacht ist. Steht dort nichts, ist die Kompatibilität unbekannt."],
  ["h","3. Dich absichern"],
  ["ul",["Teste neue Add-ons zuerst in einer Testwelt, nie in deiner Hauptwelt.","Mach vorher eine Kopie deiner Welt (Welt bearbeiten → „Welt exportieren“ bzw. „Kopieren“).","Aktualisiere Minecraft, wenn das Add-on eine neuere Version verlangt."]],
- ["note","BedrockBuddy behauptet nie, dass ein Add-on kompatibel ist, solange das nicht belegt ist. Prüfe die Quelle selbst."]]}
+ ["note","Packwisp behauptet nie, dass ein Add-on kompatibel ist, solange das nicht belegt ist. Prüfe die Quelle selbst."]]}
 ];
 
 /* Diagnose-Regeln (Prüfschritte, keine Garantien) */
@@ -221,12 +221,12 @@ function search(q){
  return{g:GUIDES.filter(g=>hit(g.title+" "+g.q+" "+g.desc)),a:ADDONS.filter(a=>hit(a.name+" "+a.desc+" "+a.cat))};
 }
 function pageGuides(){
- setMeta("Anleitungen für Minecraft Bedrock – BedrockBuddy","Verständliche deutsche Anleitungen zu Add-ons, Resource Packs, Behavior Packs und Importproblemen in Minecraft Bedrock.");
+ setMeta("Anleitungen für Minecraft Bedrock – Packwisp","Verständliche deutsche Anleitungen zu Add-ons, Resource Packs, Behavior Packs und Importproblemen in Minecraft Bedrock.");
  return `<h1>Anleitungen</h1><p class="sub" style="color:var(--mu)">Für Anfänger geschrieben. Jede Anleitung beantwortet eine konkrete Frage.</p><div class="list">${GUIDES.map(guideRow).join("")}</div>`;
 }
 function pageGuide(slug){
  const g=GUIDES.find(x=>x.slug===slug);if(!g)return page404();
- setMeta(g.title+" – BedrockBuddy",g.desc);
+ setMeta(g.title+" – Packwisp",g.desc);
  const rel=GUIDES.filter(x=>x.slug!==slug).slice(0,3);
  return `<article><div class="crumb"><a href="#/anleitungen">Anleitungen</a> / ${esc(g.title)}</div><h1>${esc(g.title)}</h1>
  <p style="color:var(--mu);font-size:1.1rem">${esc(g.q)}</p>${renderBody(g.body)}
@@ -234,7 +234,7 @@ function pageGuide(slug){
  <section class="sec"><h2>Weitere Anleitungen</h2><div class="list">${rel.map(guideRow).join("")}</div></section>`;
 }
 function pageAddons(){
- setMeta("Add-on-Verzeichnis für Minecraft Bedrock – BedrockBuddy","Add-ons nach Kategorie und Gerät filtern. Mit Kennzeichnung geprüfter und ungeprüfter Angaben.");
+ setMeta("Add-on-Verzeichnis für Minecraft Bedrock – Packwisp","Add-ons nach Kategorie und Gerät filtern. Mit Kennzeichnung geprüfter und ungeprüfter Angaben.");
  return `<h1>Add-on-Verzeichnis</h1>
  <div class="note"><b>Demo:</b> Alle Einträge sind Platzhalter ohne echte Downloads, Bewertungen oder Kompatibilitätsnachweise. Sei vorsichtig bei unbekannten Downloads und ausführbaren Dateien (.exe, .apk, .ipa).</div>
  <div class="filters"><div><label for="fq">Suche</label><input id="fq" type="search" placeholder="Name oder Stichwort"></div>
@@ -254,18 +254,18 @@ function bindAddons(){
  window.__rerun=run;run();
 }
 function pageFavs(){
- setMeta("Favoriten – BedrockBuddy","Deine lokal gespeicherten Favoriten.");
+ setMeta("Favoriten – Packwisp","Deine lokal gespeicherten Favoriten.");
  const list=ADDONS.filter(a=>favs.includes(a.id));
  return `<h1>Favoriten</h1>${storageOk?"":'<div class="note bad">Dein Browser blockiert das lokale Speichern. Favoriten gehen beim Neuladen verloren (z. B. im privaten Modus).</div>'}
  <p style="color:var(--mu)">Gespeichert nur in deinem Browser, nirgends sonst.</p>
  ${list.length?`<div class="grid">${list.map(addonCard).join("")}</div>`:`<div class="empty"><b>Noch keine Favoriten.</b><br>Tippe im <a href="#/addons">Add-on-Verzeichnis</a> auf den Stern.</div>`}`;
 }
-function page404(){setMeta("Seite nicht gefunden – BedrockBuddy",SITE_DESC);return `<div class="empty"><h1>Seite nicht gefunden</h1><p>Diese Adresse gibt es nicht. Gehe zurück zur <a href="#/">Startseite</a> oder öffne die <a href="#/anleitungen">Anleitungen</a>.</p></div>`}
+function page404(){setMeta("Seite nicht gefunden – Packwisp",SITE_DESC);return `<div class="empty"><h1>Seite nicht gefunden</h1><p>Diese Adresse gibt es nicht. Gehe zurück zur <a href="#/">Startseite</a> oder öffne die <a href="#/anleitungen">Anleitungen</a>.</p></div>`}
 
 /* ============ Diagnose-Assistent ============ */
 let D={step:0,dev:null,ver:"",prob:null};
 function pageDiag(){
- setMeta("Problem-Diagnose für Minecraft-Add-ons – BedrockBuddy","Beantworte drei Fragen und erhalte passende Prüfschritte bei Add-on-Problemen auf iPad, iPhone, Android und Windows.");
+ setMeta("Problem-Diagnose für Minecraft-Add-ons – Packwisp","Beantworte drei Fragen und erhalte passende Prüfschritte bei Add-on-Problemen auf iPad, iPhone, Android und Windows.");
  const prog=`<div class="prog" aria-hidden="true">${[0,1,2,3].map(i=>`<i class="${i<=D.step?"d":""}"></i>`).join("")}</div>`;
  let h=`<h1>Problem-Diagnose</h1>${prog}`;
  if(D.step===0)h+=`<h2>Auf welchem Gerät spielst du?</h2><div class="opts">${Object.entries(DEVICES).map(([k,v])=>`<button class="opt" data-dev="${k}">${v}</button>`).join("")}</div>`;
@@ -278,7 +278,7 @@ function pageDiag(){
   h+=`<div class="card"><b>${DEVICES[D.dev]}</b> · Version: ${ok?esc(v):"unbekannt"} · ${p.label}</div>`;
   if(!v)h+=`<div class="note">Deine Version fehlt. Prüfe sie in den Minecraft-Einstellungen und vergleiche sie mit den Angaben des Add-on-Erstellers. Ohne diese Angabe kann niemand sagen, ob das Add-on passt.</div>`;
   else if(!ok)h+=`<div class="note">„${esc(v)}“ sieht nicht wie eine Versionsnummer aus (erwartet: 1.21.50). Prüfe deine Eingabe.</div>`;
-  else h+=`<div class="note">BedrockBuddy kann nicht prüfen, ob ein Add-on zu Version ${esc(v)} passt. Vergleiche mit den Angaben des Erstellers.</div>`;
+  else h+=`<div class="note">Packwisp kann nicht prüfen, ob ein Add-on zu Version ${esc(v)} passt. Vergleiche mit den Angaben des Erstellers.</div>`;
   h+=`<h2>Das kannst du prüfen</h2><ol class="steps"><li>${DEVSTEPS[D.dev]}</li>${p.steps.map(s=>`<li>${s}</li>`).join("")}</ol>
   <div class="note bad"><b>Sicherheit:</b> Lade nichts von unbekannten Seiten. Add-ons sind keine .exe-, .apk- oder .ipa-Dateien.</div>
   <p>Ausführliche Hilfe: <a href="#/anleitung/${p.guide}">${esc(GUIDES.find(g=>g.slug===p.guide).title)}</a></p>
