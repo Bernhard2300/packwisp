@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>BedrockBuddy – Dein Minecraft-Bedrock-Helfer</title>
+<meta name="description" content="Kostenloser deutscher Helfer für Minecraft Bedrock: Add-ons finden, Installationsprobleme auf iPad, iPhone, Android und Windows lösen, Anleitungen für Resource Packs und Behavior Packs.">
+<meta name="theme-color" content="#14181a">
+<meta name="color-scheme" content="dark">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%2314181a'/%3E%3Crect x='2' y='2' width='12' height='5' fill='%235fbf3f'/%3E%3Crect x='2' y='7' width='12' height='7' fill='%238b5e3c'/%3E%3C/svg%3E">
+<style>
+:root{--bg:#14181a;--s1:#1c2326;--s2:#252e32;--line:#34414a;--tx:#e8eeea;--mu:#9fb0a8;--grass:#5fbf3f;--grass-d:#3f8a2a;--dirt:#8b5e3c;--warn:#f2b84b;--bad:#ef6b5b;--r:14px}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--tx);font:17px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
+a{color:var(--grass)}
+h1,h2,h3{line-height:1.2;margin:0 0 .5em;letter-spacing:-.01em}
+h1{font-size:clamp(2rem,6vw,3.4rem)}h2{font-size:clamp(1.4rem,3.5vw,1.9rem)}h3{font-size:1.15rem}
+p{margin:0 0 1em}
+.wrap{max-width:1040px;margin:0 auto;padding:0 18px}
+:focus-visible{outline:3px solid var(--grass);outline-offset:2px}
+header.top{position:sticky;top:0;z-index:5;background:rgba(20,24,26,.94);backdrop-filter:blur(8px);border-bottom:2px solid var(--line)}
+.bar{display:flex;align-items:center;gap:14px;padding:10px 0}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.15rem;color:var(--tx);text-decoration:none;white-space:nowrap}
+.px{width:26px;height:26px;display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(4,1fr);flex:none}
+.px i{background:var(--dirt)}.px i:nth-child(-n+8){background:var(--grass)}.px i:nth-child(3),.px i:nth-child(6){background:var(--grass-d)}.px i:nth-child(11),.px i:nth-child(14){background:#6e4a2f}
+nav{display:flex;gap:4px;overflow-x:auto;margin-left:auto;scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+nav a{color:var(--mu);text-decoration:none;padding:8px 12px;border-radius:10px;white-space:nowrap;font-weight:600;font-size:.95rem}
+nav a:hover{color:var(--tx)}nav a.on{background:var(--s2);color:var(--tx);box-shadow:inset 0 -3px 0 var(--grass)}
+main{padding:28px 0 56px;min-height:70vh}
+.hero{padding:26px 0 10px}
+.hero p.sub{font-size:1.2rem;color:var(--mu);max-width:36em}
+.card{background:var(--s1);border:2px solid var(--line);border-radius:var(--r);padding:18px}
+.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}
+.feat{display:block;text-decoration:none;color:inherit;background:var(--s1);border:2px solid var(--line);border-radius:var(--r);padding:20px;box-shadow:4px 4px 0 #0c0f10;transition:transform .15s,border-color .15s}
+.feat:hover{transform:translate(-2px,-2px);border-color:var(--grass)}
+.feat .ic{font-size:1.8rem;margin-bottom:6px;display:block}
+.feat p{color:var(--mu);margin:0}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:46px;padding:10px 18px;border-radius:12px;border:2px solid var(--grass-d);background:var(--grass);color:#0d1a08;font:inherit;font-weight:800;cursor:pointer;text-decoration:none;box-shadow:0 4px 0 var(--grass-d)}
+.btn:active{transform:translateY(3px);box-shadow:0 1px 0 var(--grass-d)}
+.btn.ghost{background:var(--s2);color:var(--tx);border-color:var(--line);box-shadow:0 4px 0 #0c0f10}
+.btn.sm{min-height:38px;padding:6px 12px;font-size:.9rem}
+input,select{font:inherit;color:var(--tx);background:var(--s2);border:2px solid var(--line);border-radius:12px;padding:11px 14px;min-height:46px;width:100%}
+input::placeholder{color:#7d8f87}
+label{display:block;font-weight:700;margin-bottom:6px}
+.search{display:flex;gap:8px;margin:20px 0 4px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.chip{display:inline-block;padding:6px 12px;border-radius:99px;background:var(--s2);border:2px solid var(--line);color:var(--tx);font:inherit;font-size:.9rem;font-weight:600;text-decoration:none;cursor:pointer}
+.chip:hover,.chip.on{border-color:var(--grass);color:var(--grass)}
+.sec{margin-top:38px}
+.list{display:grid;gap:10px}
+.row{display:block;text-decoration:none;color:inherit;background:var(--s1);border:2px solid var(--line);border-radius:var(--r);padding:14px 16px}
+.row:hover{border-color:var(--grass)}
+.row b{display:block}.row span{color:var(--mu);font-size:.95rem}
+.tag{display:inline-block;font-size:.8rem;font-weight:700;padding:2px 9px;border-radius:7px;margin-right:6px;background:var(--s2);border:1px solid var(--line);color:var(--mu)}
+.tag.demo{background:#3a2d12;border-color:#6b5120;color:var(--warn)}
+.tag.no{background:#2c1d1b;border-color:#6a3a33;color:var(--bad)}
+.note{border-left:5px solid var(--warn);background:#2a2412;border-radius:0 12px 12px 0;padding:12px 14px;margin:16px 0;font-size:.97rem}
+.note.bad{border-color:var(--bad);background:#2c1a18}
+.note.ok{border-color:var(--grass);background:#18271a}
+.addon h3{display:flex;justify-content:space-between;gap:10px;align-items:start}
+.fav{background:none;border:0;font-size:1.5rem;cursor:pointer;color:var(--mu);padding:0 4px;line-height:1;min-width:36px;min-height:36px}
+.fav.on{color:var(--warn)}
+.meta{font-size:.9rem;color:var(--mu);margin:8px 0}
+.filters{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));margin:14px 0}
+.steps{counter-reset:s;list-style:none;padding:0;margin:14px 0}
+.steps li{counter-increment:s;position:relative;padding:12px 14px 12px 56px;margin-bottom:10px;background:var(--s1);border:2px solid var(--line);border-radius:var(--r)}
+.steps li:before{content:counter(s);position:absolute;left:12px;top:10px;width:32px;height:32px;display:grid;place-items:center;background:var(--grass);color:#0d1a08;font-weight:800;border-radius:6px}
+.opts{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));margin:14px 0}
+.opt{text-align:left;background:var(--s1);border:2px solid var(--line);border-radius:var(--r);color:var(--tx);font:inherit;font-weight:700;padding:16px;cursor:pointer;min-height:58px}
+.opt:hover{border-color:var(--grass)}
+.prog{display:flex;gap:6px;margin:0 0 18px}
+.prog i{flex:1;height:8px;background:var(--s2);border-radius:2px}.prog i.d{background:var(--grass)}
+article h2{margin-top:1.6em}
+article ul,article ol{padding-left:1.3em;margin:0 0 1em}article li{margin-bottom:.4em}
+.crumb{font-size:.9rem;color:var(--mu);margin-bottom:14px}
+.spin{width:30px;height:30px;border:4px solid var(--line);border-top-color:var(--grass);border-radius:50%;animation:sp .8s linear infinite;margin:50px auto}
+@keyframes sp{to{transform:rotate(360deg)}}
+.empty{text-align:center;padding:36px 16px;color:var(--mu)}
+footer{border-top:2px solid var(--line);padding:24px 0 40px;color:var(--mu);font-size:.9rem}
+.sr{position:absolute;left:-9999px}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+@media(max-width:560px){.bar{flex-wrap:wrap}nav{margin-left:0;width:100%}.search{flex-direction:column}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap bar">
+<a class="logo" href="#/"><span class="px" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>BedrockBuddy</a>
+<nav id="nav" aria-label="Hauptnavigation">
+<a href="#/" data-r="home">Start</a><a href="#/diagnose" data-r="diagnose">Diagnose</a><a href="#/addons" data-r="addons">Add-ons</a><a href="#/anleitungen" data-r="anleitungen">Anleitungen</a><a href="#/favoriten" data-r="favoriten">★ Favoriten</a>
+</nav></div></header>
+<main><div class="wrap" id="app" aria-live="polite"></div></main>
+<footer><div class="wrap">
+<p><b>BedrockBuddy</b> ist ein inoffizielles Fan-Projekt und nicht mit Mojang, Microsoft oder Minecraft verbunden. „Minecraft“ ist eine Marke von Mojang Synergies AB. Diese Seite nutzt keine offiziellen Logos oder Grafiken.</p>
+<p>Alle Angaben ohne Kennzeichnung „geprüft“ sind unverifiziert. Die Seite speichert nur deine Favoriten lokal in deinem Browser und sendet keine Daten an Server.</p>
+</div></footer>
+
+<script>
+"use strict";
+/* ============ DATEN (hier später erweitern) ============ */
+const CATS=["Fahrzeuge","Militär","Tiere","Technik","Horror","Abenteuer","Dekoration","Survival"];
+const DEVICES={ios:"iPad/iPhone",android:"Android",windows:"Windows"};
+
+// DEMO-Daten: erfunden, nur zur Veranschaulichung. Keine echten Links, Bewertungen oder Tests.
+const ADDONS=[
+ {id:"d1",name:"Demo: Stadtfahrzeuge",cat:"Fahrzeuge",desc:"Platzhalter-Eintrag für einen Add-on mit Autos und Bussen.",dev:[],ver:null,ok:false,src:null},
+ {id:"d2",name:"Demo: Feldlager-Pack",cat:"Militär",desc:"Platzhalter-Eintrag für Zelte und Ausrüstung im Feldlager-Stil.",dev:[],ver:null,ok:false,src:null},
+ {id:"d3",name:"Demo: Waldtiere",cat:"Tiere",desc:"Platzhalter-Eintrag für zusätzliche Tiere in Wäldern.",dev:[],ver:null,ok:false,src:null},
+ {id:"d4",name:"Demo: Maschinenbau",cat:"Technik",desc:"Platzhalter-Eintrag für Maschinen und Förderbänder.",dev:[],ver:null,ok:false,src:null},
+ {id:"d5",name:"Demo: Dunkle Nächte",cat:"Horror",desc:"Platzhalter-Eintrag für gruselige Kreaturen bei Nacht.",dev:[],ver:null,ok:false,src:null},
+ {id:"d6",name:"Demo: Ruinen-Expedition",cat:"Abenteuer",desc:"Platzhalter-Eintrag für neue Dungeons und Schatztruhen.",dev:[],ver:null,ok:false,src:null},
+ {id:"d7",name:"Demo: Gartenmöbel",cat:"Dekoration",desc:"Platzhalter-Eintrag für Möbel und Deko-Blöcke.",dev:[],ver:null,ok:false,src:null},
+ {id:"d8",name:"Demo: Überlebenskünstler",cat:"Survival",desc:"Platzhalter-Eintrag für Durst, Hunger-Erweiterungen und Crafting.",dev:[],ver:null,ok:false,src:null}
+];
+
+const GUIDES=[
+{slug:"addons-auf-dem-ipad-installieren",date:"2026-10-20",title:"Add-ons auf dem iPad installieren",q:"Wie installiere ich Minecraft-Bedrock-Add-ons auf dem iPad?",
+ desc:"Schritt für Schritt: .mcaddon und .mcpack auf dem iPad oder iPhone in Minecraft Bedrock importieren und in der Welt aktivieren.",
+ body:[["p","Add-ons sind Dateien mit der Endung <code>.mcaddon</code> oder <code>.mcpack</code>. Auf dem iPad importierst du sie über die Dateien-App und aktivierst sie danach in deiner Welt."],
+ ["warn","Lade Dateien nur von Quellen, denen du vertraust. Add-ons sind keine Programme: Eine Datei mit der Endung .exe, .apk oder .ipa ist KEIN Add-on und gehört nicht auf dein Gerät."],
+ ["h","Schritt für Schritt"],
+ ["ol",["Lade die Datei herunter (zum Beispiel in Safari). Sie landet meist in der Dateien-App im Ordner „Downloads“.","Öffne die Dateien-App und tippe die Datei an.","Wähle „Minecraft“ als App zum Öffnen. Falls nichts angeboten wird: Datei lange drücken → Teilen → Minecraft.","Minecraft startet und zeigt eine Meldung zum Import. Warte, bis „Import erfolgreich“ erscheint.","Erstelle eine neue Welt oder bearbeite eine bestehende und aktiviere das Pack unter „Resource Packs“ bzw. „Behavior Packs“."]],
+ ["h","Wenn es nicht klappt"],
+ ["ul",["Endet die Datei auf <code>.zip</code>? Dann musst du sie evtl. in .mcpack oder .mcaddon umbenennen – prüfe vorher die Quelle.","Minecraft muss aktuell genug für das Add-on sein (siehe Anleitung zur Versionsprüfung).","Hast du genug freien Speicher auf dem Gerät?"]],
+ ["p","Bezeichnungen in Menüs können sich je nach Minecraft-Version ändern. Orientiere dich im Zweifel an den Begriffen in deiner eigenen Version."]]},
+{slug:"resource-pack-vs-behavior-pack",date:"2026-10-19",title:"Unterschiede zwischen Resource Packs und Behavior Packs",q:"Was ist der Unterschied zwischen Resource Pack und Behavior Pack?",
+ desc:"Einfach erklärt: Was Resource Packs und Behavior Packs in Minecraft Bedrock tun, warum viele Add-ons beides brauchen und worauf du achten musst.",
+ body:[["p","Ein Add-on besteht oft aus zwei Teilen, die zusammenarbeiten."],
+ ["h","Resource Pack: das Aussehen"],["p","Ein Resource Pack ändert, wie etwas aussieht und klingt: Texturen, Modelle, Animationen, Sounds und Texte."],
+ ["h","Behavior Pack: das Verhalten"],["p","Ein Behavior Pack ändert, was im Spiel passiert: wie sich Mobs verhalten, welche Gegenstände es gibt und wie Dinge funktionieren."],
+ ["h","Warum brauche ich oft beide?"],["p","Ein neues Tier braucht zum Beispiel ein Verhalten (Behavior Pack) und ein Aussehen (Resource Pack). Fehlt ein Teil, erscheint das Objekt oft unsichtbar, ohne Textur oder gar nicht."],
+ ["ul",["Eine <code>.mcaddon</code>-Datei enthält meist beide Packs in einer Datei.","Eine <code>.mcpack</code>-Datei enthält genau ein Pack.","Beide Packs musst du in den Welteinstellungen getrennt aktivieren."]],
+ ["warn","Behavior Packs können in manchen Fällen zusätzliche Spieloptionen („Experimente“) verlangen. Was nötig ist, steht in der Beschreibung des Add-on-Erstellers."]]},
+{slug:"mcaddon-datei-wird-nicht-importiert",date:"2026-10-18",title:"Was tun, wenn eine .mcaddon-Datei nicht importiert wird?",q:"Warum lässt sich meine .mcaddon-Datei nicht importieren?",
+ desc:"Checkliste gegen Importfehler bei .mcaddon- und .mcpack-Dateien in Minecraft Bedrock auf iPad, Android und Windows.",
+ body:[["p","Wenn nach dem Öffnen nichts passiert oder eine Fehlermeldung erscheint, helfen diese Prüfschritte der Reihe nach."],
+ ["ol",["<b>Dateiendung prüfen:</b> Sie muss .mcaddon oder .mcpack lauten. Bei .zip prüfe die Quelle; manchmal liegt nur ein Ordner mit Packs darin.","<b>Datei vollständig?</b> Lade sie erneut herunter. Abgebrochene Downloads sind eine häufige Ursache.","<b>Mit Minecraft öffnen:</b> Nutze „Öffnen mit“ bzw. „Teilen“ und wähle Minecraft statt einer anderen App.","<b>Minecraft aktualisieren:</b> Eine alte Version kann neue Packs ablehnen.","<b>Speicherplatz:</b> Ist der Gerätespeicher fast voll, bricht der Import eventuell ab.","<b>Neustart:</b> Minecraft komplett schließen und erneut öffnen, dann nochmal importieren.","<b>Andere Quelle testen:</b> Prüfe, ob der Ersteller eine neuere Fassung veröffentlicht hat."]],
+ ["note","Die Datei bleibt trotz allem defekt? Dann liegt es meist am Pack selbst und nicht an dir. Schreibe dem Ersteller auf der Originalseite."],
+ ["warn","Öffne keine unbekannten ausführbaren Dateien, nur weil eine Seite behauptet, sie würden „beim Import helfen“."]]},
+{slug:"pack-erscheint-nicht-in-den-welteinstellungen",date:"2026-10-17",title:"Warum erscheint ein Pack nicht in den Welteinstellungen?",q:"Warum sehe ich mein Resource Pack oder Behavior Pack nicht in der Welt?",
+ desc:"Importiert, aber nicht sichtbar? So findest du heraus, warum ein Pack in Minecraft Bedrock nicht in den Welteinstellungen auftaucht.",
+ body:[["p","Ein erfolgreicher Import bedeutet nur, dass das Pack gespeichert wurde. Es muss danach noch für jede Welt einzeln aktiviert werden."],
+ ["ol",["Öffne „Spielen“ und tippe beim Stift-Symbol deiner Welt auf „Bearbeiten“.","Suche links die Bereiche „Resource Packs“ und „Behavior Packs“.","Wechsle zum Reiter „Meine Packs“ bzw. „Verfügbar“ und tippe beim Pack auf „Aktivieren“.","Fehlt es dort? Prüfe, ob du Resource und Behavior Pack in der richtigen Liste suchst."]],
+ ["h","Weitere Ursachen"],
+ ["ul",["Der Import hat nicht geklappt (siehe Anleitung zur .mcaddon-Datei).","Das Pack passt nicht zur Minecraft-Version und wird deshalb nicht angeboten oder nicht geladen.","Du hast einen neuen Weltstart ausgelassen: Packs gelten pro Welt, nicht global.","Bei Realms oder Servern steuert meist der Betreiber, welche Packs gelten."]],
+ ["p","Bezeichnungen in den Menüs können je nach Version leicht abweichen."]]},
+{slug:"addon-passt-zur-minecraft-version",date:"2026-10-16",title:"Wie prüft man, ob ein Add-on zur Minecraft-Version passt?",q:"Wie erkenne ich, ob ein Add-on mit meiner Minecraft-Version funktioniert?",
+ desc:"Anfängerfreundliche Anleitung: Minecraft-Version herausfinden und mit den Angaben des Add-on-Erstellers vergleichen.",
+ body:[["p","Viele Probleme entstehen, weil ein Add-on für eine andere Minecraft-Version gebaut wurde. So prüfst du es."],
+ ["h","1. Deine Version herausfinden"],["p","Schau in den Minecraft-Einstellungen im Bereich „Info“ bzw. in den Spielinformationen nach der Versionsnummer (zum Beispiel 1.21.x). Die genaue Stelle unterscheidet sich je nach Version und Gerät."],
+ ["h","2. Angaben des Erstellers suchen"],["p","Auf der Originalseite des Add-ons steht oft, für welche Versionen es gedacht ist. Steht dort nichts, ist die Kompatibilität unbekannt."],
+ ["h","3. Dich absichern"],
+ ["ul",["Teste neue Add-ons zuerst in einer Testwelt, nie in deiner Hauptwelt.","Mach vorher eine Kopie deiner Welt (Welt bearbeiten → „Welt exportieren“ bzw. „Kopieren“).","Aktualisiere Minecraft, wenn das Add-on eine neuere Version verlangt."]],
+ ["note","BedrockBuddy behauptet nie, dass ein Add-on kompatibel ist, solange das nicht belegt ist. Prüfe die Quelle selbst."]]}
+];
+
+/* Diagnose-Regeln (Prüfschritte, keine Garantien) */
+const PROBLEMS={
+ import:{label:"Add-on lässt sich nicht importieren",steps:["Prüfe die Dateiendung: .mcaddon oder .mcpack.","Lade die Datei erneut herunter, falls der Download unterbrochen wurde.","Öffne die Datei bewusst mit Minecraft (Öffnen mit / Teilen).","Aktualisiere Minecraft auf die neueste Version.","Stelle sicher, dass genug Speicherplatz frei ist.","Schließe Minecraft komplett und versuche den Import erneut."],guide:"mcaddon-datei-wird-nicht-importiert"},
+ nofunc:{label:"Add-on funktioniert nicht",steps:["Prüfe, ob BEIDE Teile aktiviert sind: Resource Pack und Behavior Pack.","Lies auf der Originalseite, ob Spieloptionen („Experimente“) nötig sind, und aktiviere nur diese.","Erstelle zum Test eine neue Welt und aktiviere das Add-on dort.","Prüfe, für welche Minecraft-Version das Add-on gedacht ist.","Entferne andere Packs testweise, falls mehrere gleichzeitig aktiv sind."],guide:"addon-passt-zur-minecraft-version"},
+ rp:{label:"Resource Pack fehlt",steps:["Öffne die Welt zum Bearbeiten und suche im Bereich „Resource Packs“.","Tippe beim Pack auf „Aktivieren“. Packs gelten pro Welt.","Prüfe, ob der Import wirklich erfolgreich war.","Prüfe die Dateiendung und lade bei Zweifeln erneut herunter."],guide:"pack-erscheint-nicht-in-den-welteinstellungen"},
+ bp:{label:"Behavior Pack funktioniert nicht",steps:["Aktiviere das Behavior Pack im Bereich „Behavior Packs“ der Welt.","Prüfe, ob zusätzlich das passende Resource Pack aktiv sein muss.","Lies in der Beschreibung des Erstellers, ob Spieloptionen („Experimente“) nötig sind.","Teste in einer neuen Welt. Bereits erstellte Welten reagieren manchmal anders.","Vergleiche die Minecraft-Version mit den Angaben des Erstellers."],guide:"resource-pack-vs-behavior-pack"},
+ other:{label:"Anderes Problem",steps:["Starte Minecraft und dein Gerät neu.","Aktualisiere Minecraft.","Teste in einer neuen Testwelt, ohne andere Packs.","Notiere die genaue Fehlermeldung und suche damit auf der Originalseite des Add-ons oder im offiziellen Minecraft-Support."],guide:"addon-passt-zur-minecraft-version"}
+};
+const DEVSTEPS={
+ ios:"iPad/iPhone: Öffne die Datei in der Dateien-App und wähle über „Öffnen mit“ bzw. „Teilen“ die App Minecraft.",
+ android:"Android: Öffne die Datei im Dateimanager und wähle „Öffnen mit“ → Minecraft. Manche Browser-Downloads erscheinen unter „Downloads“.",
+ windows:"Windows: Doppelklick auf die .mcaddon- oder .mcpack-Datei öffnet Minecraft Bedrock. Erscheint nichts, wähle „Öffnen mit“ → Minecraft."
+};
+
+/* ============ Hilfsfunktionen ============ */
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const norm=s=>String(s).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
+let storageOk=true;
+function loadFavs(){try{return JSON.parse(localStorage.getItem("bb_favs")||"[]")}catch(e){storageOk=false;return[]}}
+let favs=loadFavs();
+function saveFavs(){try{localStorage.setItem("bb_favs",JSON.stringify(favs))}catch(e){storageOk=false}}
+function setMeta(title,desc){document.title=title;const m=document.querySelector('meta[name="description"]');if(m)m.setAttribute("content",desc)}
+const SITE_DESC=document.querySelector('meta[name="description"]').content;
+const SITE_TITLE=document.title;
+
+/* ============ Komponenten ============ */
+function addonCard(a){
+ const f=favs.includes(a.id);
+ return `<div class="card addon"><h3><span>${esc(a.name)}</span><button class="fav ${f?"on":""}" data-fav="${a.id}" aria-pressed="${f}" aria-label="${f?"Aus Favoriten entfernen":"Zu Favoriten hinzufügen"}">${f?"★":"☆"}</button></h3>
+ <p>${esc(a.desc)}</p>
+ <div><span class="tag">${esc(a.cat)}</span><span class="tag demo">DEMO</span>${a.ok?'<span class="tag">geprüft</span>':'<span class="tag no">nicht geprüft</span>'}</div>
+ <div class="meta">Geräte: ${a.dev.length?a.dev.map(d=>DEVICES[d]).join(", "):"unbekannt"}<br>Getestete Versionen: ${a.ver?esc(a.ver):"keine Angabe"}<br>Quelle: ${a.src?`<a href="${esc(a.src)}" target="_blank" rel="noopener noreferrer">Originalquelle</a>`:"kein Link (Demo-Eintrag)"}</div></div>`;
+}
+function guideRow(g){return `<a class="row" href="#/anleitung/${g.slug}"><b>${esc(g.title)}</b><span>${esc(g.q)}</span></a>`}
+function renderBody(b){return b.map(([t,v])=>{
+ if(t==="h")return `<h2>${v}</h2>`;
+ if(t==="p")return `<p>${v}</p>`;
+ if(t==="ul")return `<ul>${v.map(x=>`<li>${x}</li>`).join("")}</ul>`;
+ if(t==="ol")return `<ol class="steps">${v.map(x=>`<li>${x}</li>`).join("")}</ol>`;
+ if(t==="warn")return `<div class="note bad"><b>Sicherheit:</b> ${v}</div>`;
+ if(t==="note")return `<div class="note">${v}</div>`;return""}).join("")}
+
+/* ============ Seiten ============ */
+function pageHome(){
+ setMeta(SITE_TITLE,SITE_DESC);
+ const latest=[...GUIDES].sort((a,b)=>b.date.localeCompare(a.date)).slice(0,3);
+ return `<section class="hero"><h1>Dein Minecraft-Bedrock-Helfer.</h1>
+ <p class="sub">Finde passende Add-ons, löse Installationsprobleme und mach mehr aus deiner Minecraft-Welt.</p>
+ <form class="search" id="gsearch" role="search"><label class="sr" for="q">Suche</label><input id="q" type="search" placeholder="Zum Beispiel: mcaddon iPad" autocomplete="off"><button class="btn" type="submit">Suchen</button></form>
+ <div id="sres"></div></section>
+ <section class="grid" style="margin-top:22px">
+ <a class="feat" href="#/addons"><span class="ic" aria-hidden="true">🧩</span><h3>Add-ons entdecken</h3><p>Stöbere nach Kategorie und Gerät. Alle Angaben sind klar als geprüft oder ungeprüft markiert.</p></a>
+ <a class="feat" href="#/diagnose"><span class="ic" aria-hidden="true">🔧</span><h3>Installationsprobleme lösen</h3><p>Drei Fragen, dann bekommst du passende Prüfschritte für dein Gerät.</p></a>
+ <a class="feat" href="#/anleitungen"><span class="ic" aria-hidden="true">📖</span><h3>Anleitungen ansehen</h3><p>Verständliche Hilfe für Einsteiger, Schritt für Schritt erklärt.</p></a></section>
+ <section class="sec"><h2>Beliebte Hilfethemen</h2><div class="chips">${GUIDES.map(g=>`<a class="chip" href="#/anleitung/${g.slug}">${esc(g.title)}</a>`).join("")}</div></section>
+ <section class="sec"><h2>Zuletzt hinzugefügt</h2><div class="list">${latest.map(guideRow).join("")}</div></section>
+ <div class="note ok" style="margin-top:34px"><b>Hinweis:</b> Die Add-on-Sammlung enthält aktuell nur Demo-Einträge. Es gibt noch keine geprüften Add-ons.</div>`;
+}
+function search(q){
+ const n=norm(q.trim());if(!n)return null;
+ const words=n.split(/\s+/);
+ const hit=t=>words.every(w=>norm(t).includes(w));
+ return{g:GUIDES.filter(g=>hit(g.title+" "+g.q+" "+g.desc)),a:ADDONS.filter(a=>hit(a.name+" "+a.desc+" "+a.cat))};
+}
+function pageGuides(){
+ setMeta("Anleitungen für Minecraft Bedrock – BedrockBuddy","Verständliche deutsche Anleitungen zu Add-ons, Resource Packs, Behavior Packs und Importproblemen in Minecraft Bedrock.");
+ return `<h1>Anleitungen</h1><p class="sub" style="color:var(--mu)">Für Anfänger geschrieben. Jede Anleitung beantwortet eine konkrete Frage.</p><div class="list">${GUIDES.map(guideRow).join("")}</div>`;
+}
+function pageGuide(slug){
+ const g=GUIDES.find(x=>x.slug===slug);if(!g)return page404();
+ setMeta(g.title+" – BedrockBuddy",g.desc);
+ const rel=GUIDES.filter(x=>x.slug!==slug).slice(0,3);
+ return `<article><div class="crumb"><a href="#/anleitungen">Anleitungen</a> / ${esc(g.title)}</div><h1>${esc(g.title)}</h1>
+ <p style="color:var(--mu);font-size:1.1rem">${esc(g.q)}</p>${renderBody(g.body)}
+ <p><a class="btn" href="#/diagnose">Zur Diagnose</a></p></article>
+ <section class="sec"><h2>Weitere Anleitungen</h2><div class="list">${rel.map(guideRow).join("")}</div></section>`;
+}
+function pageAddons(){
+ setMeta("Add-on-Verzeichnis für Minecraft Bedrock – BedrockBuddy","Add-ons nach Kategorie und Gerät filtern. Mit Kennzeichnung geprüfter und ungeprüfter Angaben.");
+ return `<h1>Add-on-Verzeichnis</h1>
+ <div class="note"><b>Demo:</b> Alle Einträge sind Platzhalter ohne echte Downloads, Bewertungen oder Kompatibilitätsnachweise. Sei vorsichtig bei unbekannten Downloads und ausführbaren Dateien (.exe, .apk, .ipa).</div>
+ <div class="filters"><div><label for="fq">Suche</label><input id="fq" type="search" placeholder="Name oder Stichwort"></div>
+ <div><label for="fc">Kategorie</label><select id="fc"><option value="">Alle</option>${CATS.map(c=>`<option>${c}</option>`).join("")}</select></div>
+ <div><label for="fd">Gerät</label><select id="fd"><option value="">Alle</option>${Object.entries(DEVICES).map(([k,v])=>`<option value="${k}">${v}</option>`).join("")}</select></div></div>
+ <div class="chips"><label class="chip" style="margin:0"><input type="checkbox" id="fv" style="width:auto;min-height:0;margin-right:6px"> nur geprüfte</label><label class="chip" style="margin:0"><input type="checkbox" id="ff" style="width:auto;min-height:0;margin-right:6px"> nur Favoriten</label></div>
+ <p id="cnt" style="color:var(--mu)"></p><div class="grid" id="alist"></div>`;
+}
+function bindAddons(){
+ const run=()=>{
+  const q=norm($("#fq").value),c=$("#fc").value,d=$("#fd").value,v=$("#fv").checked,f=$("#ff").checked;
+  const res=ADDONS.filter(a=>(!c||a.cat===c)&&(!d||a.dev.includes(d))&&(!v||a.ok)&&(!f||favs.includes(a.id))&&(!q||q.split(/\s+/).every(w=>norm(a.name+" "+a.desc+" "+a.cat).includes(w))));
+  $("#cnt").textContent=res.length+" von "+ADDONS.length+" Einträgen";
+  $("#alist").innerHTML=res.length?res.map(addonCard).join(""):`<div class="empty" style="grid-column:1/-1"><b>Nichts gefunden.</b><br>Ändere die Filter oder entferne einen Suchbegriff. Filter wie „nur geprüfte“ liefern aktuell keine Treffer, weil noch keine Einträge geprüft sind.</div>`;
+ };
+ ["fq","fc","fd","fv","ff"].forEach(id=>$("#"+id).addEventListener("input",run));
+ window.__rerun=run;run();
+}
+function pageFavs(){
+ setMeta("Favoriten – BedrockBuddy","Deine lokal gespeicherten Favoriten.");
+ const list=ADDONS.filter(a=>favs.includes(a.id));
+ return `<h1>Favoriten</h1>${storageOk?"":'<div class="note bad">Dein Browser blockiert das lokale Speichern. Favoriten gehen beim Neuladen verloren (z. B. im privaten Modus).</div>'}
+ <p style="color:var(--mu)">Gespeichert nur in deinem Browser, nirgends sonst.</p>
+ ${list.length?`<div class="grid">${list.map(addonCard).join("")}</div>`:`<div class="empty"><b>Noch keine Favoriten.</b><br>Tippe im <a href="#/addons">Add-on-Verzeichnis</a> auf den Stern.</div>`}`;
+}
+function page404(){setMeta("Seite nicht gefunden – BedrockBuddy",SITE_DESC);return `<div class="empty"><h1>Seite nicht gefunden</h1><p>Diese Adresse gibt es nicht. Gehe zurück zur <a href="#/">Startseite</a> oder öffne die <a href="#/anleitungen">Anleitungen</a>.</p></div>`}
+
+/* ============ Diagnose-Assistent ============ */
+let D={step:0,dev:null,ver:"",prob:null};
+function pageDiag(){
+ setMeta("Problem-Diagnose für Minecraft-Add-ons – BedrockBuddy","Beantworte drei Fragen und erhalte passende Prüfschritte bei Add-on-Problemen auf iPad, iPhone, Android und Windows.");
+ const prog=`<div class="prog" aria-hidden="true">${[0,1,2,3].map(i=>`<i class="${i<=D.step?"d":""}"></i>`).join("")}</div>`;
+ let h=`<h1>Problem-Diagnose</h1>${prog}`;
+ if(D.step===0)h+=`<h2>Auf welchem Gerät spielst du?</h2><div class="opts">${Object.entries(DEVICES).map(([k,v])=>`<button class="opt" data-dev="${k}">${v}</button>`).join("")}</div>`;
+ else if(D.step===1)h+=`<h2>Welche Minecraft-Version hast du?</h2><p style="color:var(--mu)">Zum Beispiel 1.21.50. Du findest sie meist in den Einstellungen im Bereich „Info“. Weißt du sie nicht, lass das Feld leer.</p>
+  <label class="sr" for="ver">Version</label><input id="ver" inputmode="decimal" maxlength="20" placeholder="z. B. 1.21.50" value="${esc(D.ver)}">
+  <p style="margin-top:14px"><button class="btn" data-next>Weiter</button> <button class="btn ghost" data-back>Zurück</button></p>`;
+ else if(D.step===2)h+=`<h2>Was ist das Problem?</h2><div class="opts">${Object.entries(PROBLEMS).map(([k,v])=>`<button class="opt" data-prob="${k}">${v.label}</button>`).join("")}</div><p><button class="btn ghost" data-back>Zurück</button></p>`;
+ else{
+  const p=PROBLEMS[D.prob],v=D.ver.trim(),ok=/^\d+(\.\d+){1,3}$/.test(v);
+  h+=`<div class="card"><b>${DEVICES[D.dev]}</b> · Version: ${ok?esc(v):"unbekannt"} · ${p.label}</div>`;
+  if(!v)h+=`<div class="note">Deine Version fehlt. Prüfe sie in den Minecraft-Einstellungen und vergleiche sie mit den Angaben des Add-on-Erstellers. Ohne diese Angabe kann niemand sagen, ob das Add-on passt.</div>`;
+  else if(!ok)h+=`<div class="note">„${esc(v)}“ sieht nicht wie eine Versionsnummer aus (erwartet: 1.21.50). Prüfe deine Eingabe.</div>`;
+  else h+=`<div class="note">BedrockBuddy kann nicht prüfen, ob ein Add-on zu Version ${esc(v)} passt. Vergleiche mit den Angaben des Erstellers.</div>`;
+  h+=`<h2>Das kannst du prüfen</h2><ol class="steps"><li>${DEVSTEPS[D.dev]}</li>${p.steps.map(s=>`<li>${s}</li>`).join("")}</ol>
+  <div class="note bad"><b>Sicherheit:</b> Lade nichts von unbekannten Seiten. Add-ons sind keine .exe-, .apk- oder .ipa-Dateien.</div>
+  <p>Ausführliche Hilfe: <a href="#/anleitung/${p.guide}">${esc(GUIDES.find(g=>g.slug===p.guide).title)}</a></p>
+  <p><button class="btn ghost" data-reset>Neue Diagnose</button></p>`;
+ }
+ return h;
+}
+
+/* ============ Router & Events ============ */
+function render(){
+ const hash=location.hash.replace(/^#\/?/,"");const [r,arg]=hash.split("/");const app=$("#app");
+ const key=r||"home";
+ document.querySelectorAll("#nav a").forEach(a=>a.classList.toggle("on",a.dataset.r===(key==="anleitung"?"anleitungen":key)));
+ app.innerHTML='<div class="spin" role="status" aria-label="Lädt"></div>';
+ try{
+  let html;
+  switch(key){case"home":html=pageHome();break;case"diagnose":html=pageDiag();break;case"addons":html=pageAddons();break;case"anleitungen":html=pageGuides();break;case"anleitung":html=pageGuide(arg);break;case"favoriten":html=pageFavs();break;default:html=page404()}
+  app.innerHTML=html;
+  if(key==="addons")bindAddons();
+  if(key!=="diagnose"||D.step===0)window.scrollTo(0,0);
+ }catch(e){app.innerHTML=`<div class="note bad"><b>Fehler:</b> Die Seite konnte nicht geladen werden. Lade sie neu oder gehe zur <a href="#/">Startseite</a>.</div>`;console.error(e)}
+}
+window.addEventListener("hashchange",render);
+document.addEventListener("click",e=>{
+ const t=e.target.closest("button");if(!t)return;
+ if(t.dataset.fav){const id=t.dataset.fav;favs=favs.includes(id)?favs.filter(x=>x!==id):[...favs,id];saveFavs();
+  if(window.__rerun&&$("#alist"))window.__rerun();else render()}
+ else if(t.dataset.dev){D.dev=t.dataset.dev;D.step=1;render()}
+ else if(t.hasAttribute("data-next")){D.ver=($("#ver").value||"");D.step=2;render()}
+ else if(t.hasAttribute("data-back")){if($("#ver"))D.ver=$("#ver").value;D.step=Math.max(0,D.step-1);render()}
+ else if(t.dataset.prob){D.prob=t.dataset.prob;D.step=3;render()}
+ else if(t.hasAttribute("data-reset")){D={step:0,dev:null,ver:"",prob:null};render()}
+});
+document.addEventListener("submit",e=>{
+ if(e.target.id!=="gsearch")return;e.preventDefault();
+ const r=search($("#q").value),box=$("#sres");
+ if(!r){box.innerHTML='<div class="note">Gib einen Suchbegriff ein, zum Beispiel „iPad“ oder „Resource Pack“.</div>';return}
+ if(!r.g.length&&!r.a.length){box.innerHTML='<div class="empty"><b>Keine Treffer.</b><br>Versuche ein anderes Wort oder schau in die <a href="#/anleitungen">Anleitungen</a>.</div>';return}
+ box.innerHTML=(r.g.length?`<h3 style="margin-top:14px">Anleitungen</h3><div class="list">${r.g.map(guideRow).join("")}</div>`:"")+(r.a.length?`<h3 style="margin-top:14px">Add-ons (Demo)</h3><div class="grid">${r.a.map(addonCard).join("")}</div>`:"");
+});
+render();
+</script>
+</body>
+</html>
